@@ -1,6 +1,16 @@
-# Grupo Dart 2 
+'''
+Grupo Dart 2
+Integrantes: Allison Brito y Juan Fco. Nebel
+
+TODO: 
+1) Aun no reconoce le + solo, chequear ejemplo de suma
+    a) Esto solo ocurre cuando el + está entre espacios
+
+'''
+
 import ply.lex as lex
 
+# Diccionario de palabras reservadas
 reservadas = {
     'for'    : 'FOR',
     'var'    : 'VAR',
@@ -8,8 +18,10 @@ reservadas = {
     'double' : 'DOUBLE'
 }
 
-tokens = (
+# Lista de tokens
+tokens = [
     'NUMBER',
+    'INCREMENTO',
     'ID',
     'PLUS',
     'MINUS',
@@ -23,42 +35,45 @@ tokens = (
     'PUNTCOM',
     'RCURLYB',
     'LCURLYB'
-) + tuple(reservadas.values())
-
+] + list(reservadas.values())
+    
 #Expresiones regulares:
-t_VAR = r'^var$'
-t_ignore = '^ \t$'
-t_NUMBER = r'^\d+$'
-t_PLUS = r'^\+$'
-t_MINUS = r'^-$'
-t_TIMES = r'^\*$'
-t_DIVIDE = r'^\/$' 
-t_LPAREN = r'^\($'
-t_RPAREN = r'^\)$'
-t_MAYORQUE = r'^>$'
-t_MENORQUE = r'^<$'
-t_ID = r'^\w+$'
-t_EQUALS = r'^\=$'
-t_PUNTCOM = r'^\;$'
-t_FOR = r'^for$'
-t_INT = r'^int$'
-t_DOUBLE = r'^double$'
+t_ignore     = r' |    '  # ignore espacio o tab, usar caracteres \t saca un warning
+t_VAR        = r'\bvar\b'
+t_FOR        = r'\bfor\b'
+t_INT        = r'\bint\b'
+t_DOUBLE     = r'\bdouble\b'
+t_NUMBER     = r'\b\d+\b'
+t_ID         = r'\b\w+\b'
+t_PLUS       = r'\b\+\b'
+t_INCREMENTO = r'\+\+'
+t_RCURLYB    = r'\}'
+t_LCURLYB    = r'\{'
+t_MINUS      = r'-'
+t_TIMES      = r'\*'
+t_DIVIDE     = r'\/' 
+t_LPAREN     = r'\('
+t_RPAREN     = r'\)'
+t_MAYORQUE   = r'>'
+t_MENORQUE   = r'<'
+t_EQUALS     = r'\='
+t_PUNTCOM    = r'\;'
 
-# Error handling rule
+# Manejo de errores
 def t_error(t):
     print("No es reconocido '%s'" % t.value[0])
     t.lexer.skip(1)
 
-
-# Build the lexer
+# Construyendo al lexer
 lexer = lex.lex()
 
-# Test it out
-data = '''var variable;'''
-
-# Give the lexer some input
+# Data a analizar
+data =  'for(int i = 0; i < 10; i++){}'
+ 
+# Darle el input al lexer
 lexer.input(data)
-# Tokenize
+
+# Iteración de tokens
 while True:
     tok = lexer.token()
     if not tok:
