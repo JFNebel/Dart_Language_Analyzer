@@ -121,11 +121,11 @@ def t_error(t):
 
 # Construyendo al lexer
 lexer = lex.lex()
-lista_archivos=["test_Allison_Brito.txt","test_Juan_Nebel.txt"]
-for archivo in lista_archivos:
-    fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
-    for data in fichero.readlines():
-        
+archivo = 'codigo.txt'
+fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
+
+for data in fichero.readlines():
+    if(data[0]!='#'):
         print("\n") #Deja un espacio entre frases
         print("*************************************************************")
         print("La frase a analizar es: ", data)
