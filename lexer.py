@@ -1,13 +1,6 @@
 '''
 Grupo Dart 2
 Integrantes: Allison Brito y Juan Fco. Nebel
-
-TODO: 
-1) Aun no reconoce le + solo, chequear ejemplo de suma
-    a) Esto solo ocurre cuando el + está entre espacios
-    b) Crear sección de leído del archivo de ejemplos 
-    c) Agregar y validar 1 estructura de control
-
 '''
 import os
 import ply.lex as lex
@@ -91,7 +84,7 @@ t_EQUALS     = r'\='
 t_PUNTCOM    = r'\;'
 t_AND        = r'\&\&'
 t_OR         = r'\|\|'
-t_NOT   = r'\!'
+t_NOT        = r'\!'
 t_PUT        = r'\b\.putIfAbsent\b'
 t_UPDATE     = r'\b\.update\b'
 t_PRINT      = r'\bprint\b'
@@ -133,6 +126,7 @@ for archivo in lista_archivos:
             break
         else:
             lexer.input(data)
+
             # Iteración de tokens
             while True:
                 tok = lexer.token()
