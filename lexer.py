@@ -103,6 +103,10 @@ def t_NUMBER(t):
     t.type = reservadas.get(t.value, 'NUMBER')
     return t
 
+#Salto de línea
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
 #Id(variables)
 def t_ID(t):
@@ -121,6 +125,10 @@ lista_archivos=["test_Allison_Brito.txt","test_Juan_Nebel.txt"]
 for archivo in lista_archivos:
     fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
     for data in fichero.readlines():
+        
+        print("\n") #Deja un espacio entre frases
+        print("*************************************************************")
+        print("La frase a analizar es: ", data)
         # Darle el input al lexer
         if len(data)==0:
             break

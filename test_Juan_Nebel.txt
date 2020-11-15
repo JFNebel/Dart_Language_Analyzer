@@ -1,9 +1,9 @@
-'var variable;'
-'var variable=20;'
-'2 + 3'
-'2 -      3'
-'(2 * 3)'
-'(5 / 2)'
-'(3 > 2)'
-'(2 < 3)'
-'for(int i = 0; i < 10; i++){}'
+var variable;
+var variable=20;
+2 + 3
+2 -      3
+(2 * 3)
+(5 / 2)
+(3 > 2)
+(2 < 3)
+for(int i = 0; i < 10; i++){}
