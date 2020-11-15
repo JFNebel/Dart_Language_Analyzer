@@ -3,10 +3,8 @@ Grupo Dart 2
 Integrantes: Allison Brito y Juan Fco. Nebel
 
 TODO: 
-1) Aun no reconoce le + solo, chequear ejemplo de suma
-    a) Esto solo ocurre cuando el + está entre espacios
-    b) Crear sección de leído del archivo de ejemplos 
-    c) Agregar y validar 1 estructura de control
+1) Crear sección de leído del archivo de ejemplos (ver linea 71)
+2) Agregar y validar 1 estructura de datos
 
 '''
 
@@ -47,7 +45,7 @@ t_INT        = r'\bint\b'
 t_DOUBLE     = r'\bdouble\b'
 t_NUMBER     = r'\b\d+\b'
 t_ID         = r'\b\w+\b'
-t_PLUS       = r'\b\+\b'
+t_PLUS       = r'\+'
 t_INCREMENTO = r'\+\+'
 t_RCURLYB    = r'\}'
 t_LCURLYB    = r'\{'
