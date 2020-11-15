@@ -119,7 +119,7 @@ def t_error(t):
 lexer = lex.lex()
 lista_archivos=["test_Allison_Brito.txt","test_Juan_Nebel.txt"]
 for archivo in lista_archivos:
-    fichero= open(os.getcwd()+str('\\') +archivo,'r+',encoding="utf8")
+    fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
     for data in fichero.readlines():
         # Darle el input al lexer
         if len(data)==0:
