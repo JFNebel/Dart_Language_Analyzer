@@ -1,0 +1,27 @@
+# ********************************  Ejemplos Allison Brito **************************************
+i++; i+;
+var $variable =20;
+var variable;
+var vari$able;
+var variab_ = 15~/3;
+double r_=20.30;
+var lista = new List(3);
+var mapa = new Map();
+mapa['clave'] = 'valor';
+$mapa["clave"] = "valor";
+if(variable && vairbale1){}
+if(!variable || variable){}
+mapa.putIfAbsent(3,()=>'! ');
+mapa.update(2,(v)=>'mundo !');
+print(variable);
+while($variable < 20){print(num); num--; num=num-1;}
+# ********************************* Ejemplos Juan Nebel *****************************************
+var variable;
+var variable=20;
+2 + 3
+2 -      3
+(2 * 3)
+(5 / 2)
+(3 > 2)
+(2 < 3)
+for(int i = 0; i < 10; i++){}
