@@ -110,6 +110,7 @@ def t_ID(t):
     t.type = reservadas.get(t.value,'ID')    # Check for reserved words
     return t
 
+
 # Manejo de errores
 def t_error(t):
     print("No es reconocido '%s'" % t.value[0])
