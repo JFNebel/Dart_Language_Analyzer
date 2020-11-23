@@ -1,10 +1,20 @@
 import ply.yacc as yacc
 from lexer import tokens
 
+'''
+TODO: 
+    ) Refinar las tres reglas primarias
+    ) Hacer un algoritmo de 5 a 10 lineas y capturar las comprobaciones
+'''
+
+
+
 def p_expresion(p):
     '''expresion : lista
     | mapa
     | variable
+    | expresionFor
+    | expresionWhile
     | concatenacion
     | incremento
     | decremento
@@ -14,7 +24,7 @@ def p_expresion(p):
 def p_variable(p):
     '''variable : VAR ID EQUALS expresionVar PUNTCOM
                 | VAR ID PUNTCOM
-                | expresionBool'''
+                | VAR ID EQUALS expresionBool PUNTCOM'''
 
 def p_valorVar(p):
     '''valorVar : NUMBER
@@ -26,14 +36,57 @@ def p_expresionVar(p):
                     | ID 
                     | expresionVar operadorA expresionVar'''
 
+def p_expresionFor(p):
+    'expresionFor : FOR LPAREN forParameters RPAREN LCURLYB RCURLYB'   
+
+def p_forParameters(p):
+    'forParameters : forIterator PUNTCOM forCondition PUNTCOM forAction'
+
+def p_forIterator(p):
+    '''forIterator : INT ID EQUALS NUMBER
+                   | ID EQUALS NUMBER'''
+
+def p_forCondition(p):
+    '''forCondition : ID MAYORQUE NUMBER 
+                    | ID MENORQUE NUMBER '''
+
+def p_forAction(p):
+    '''forAction : ID INCREMENTO  
+                 | ID DECREMENTO
+                 | INCREMENTO ID
+                 | DECREMENTO ID'''
+
+def p_expresionWhile(p):
+    'expresionWhile : WHILE LPAREN expresionBool RPAREN LCURLYB RCURLYB'
+
 #Allison Brito y JF Nebel
 def p_expresionBool(p):
-    '''expresionBool : VARBOOL ID EQUALS booleano pto_coma
-                     | VAR ID EQUALS booleano pto_coma''' 
+    '''expresionBool : booleano
+                     | ID comparador ID
+                     | ID comparador NUMBER
+                     | NUMBER comparador ID
+                     | NUMBER comparador NUMBER'''
 
 def p_booleano(p):
     '''booleano : TRUE
-    | FALSE'''
+                | FALSE'''
+
+def p_comparador(p):
+    '''comparador : MAYORQUE 
+                  | MENORQUE
+                  | EQUIVAL
+                  | MINEQ
+                  | MAYEQ'''
+
+
+
+
+
+
+
+
+
+
 
 #Allison Brito
 #Regla de expresion de lista
@@ -121,7 +174,6 @@ def p_error(p):
 
 # Build the parser
 parser = yacc.yacc()
- 
 while True:
     try:
         s = input('Ingrese el codigo > ')

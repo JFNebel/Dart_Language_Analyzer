@@ -30,6 +30,9 @@ tokens = [
     'NUMBER',
     'INCREMENTO',
     'DECREMENTO',
+    'EQUIVAL',
+    'MAYEQ',
+    'MINEQ',
     'DOUBLE',
     'ID',
     'PLUS',
@@ -75,6 +78,9 @@ t_SUBSTRING  = r'\bsubstring\b'
 t_ADD        = r'\badd\b'
 t_INCREMENTO = r"\+\+"
 t_DECREMENTO = r'\-\-'
+t_EQUIVAL    = r'=='
+t_MAYEQ      = r'>='
+t_MINEQ      = r'<='
 t_PLUS       = r'\+'
 t_RCURLYB    = r'\}'
 t_LCURLYB    = r'\{'
@@ -144,7 +150,7 @@ lexer = lex.lex()
 archivo = 'codigo.txt'
 fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
 
-
+'''
 for data in fichero.readlines():
     if(data[0]!='#'):
         print("\n") #Deja un espacio entre frases
@@ -161,3 +167,4 @@ for data in fichero.readlines():
                 if not tok:
                     break  # No more input
                 print(tok)
+'''
