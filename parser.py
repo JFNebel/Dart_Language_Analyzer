@@ -1,20 +1,14 @@
 import ply.yacc as yacc
 from lexer import tokens
 
-#Allison Brito
 def p_expresion(p):
     '''expresion : lista
     | mapa
     | variable
-    | icadena
     | concatenacion
     | incremento
     | decremento
     '''
-
-def p_expresionA(p):
-    'expresionA : valor operadorA valor'
-
 
 # Juan Nebel
 def p_variable(p):
@@ -32,7 +26,7 @@ def p_expresionVar(p):
                     | ID 
                     | expresionVar operadorA expresionVar'''
 
-
+#Allison Brito y JF Nebel
 def p_expresionBool(p):
     '''expresionBool : VARBOOL ID EQUALS booleano pto_coma
                      | VAR ID EQUALS booleano pto_coma''' 
@@ -41,6 +35,7 @@ def p_booleano(p):
     '''booleano : TRUE
     | FALSE'''
 
+#Allison Brito
 #Regla de expresion de lista
 def p_lista(p):
     '''lista : expLista
@@ -55,17 +50,21 @@ def p_expLista(p):
 
 #Agregar elementos a una lista
 def p_add_lista(p):
-    '''add_lista : ID LCORCHETE NUMBER RCORCHETE EQUALS NUMBER pto_coma
-    |   ID PTO ADD LPAREN NUMBER RPAREN pto_coma
-    | ID PTO ADD LPAREN ID RPAREN pto_coma
+    '''add_lista : ID LCORCHETE NUMBER RCORCHETE EQUALS num_cadena pto_coma
+    | ID PTO ADD LPAREN num_cadena RPAREN pto_coma
     '''
-#Recursividad al agregar elementos de una lista ID debe cambiarse por CADENA
+#Toma el valor de un numero o de un string con comillas incluido
+def p_num_cadena(p):
+    '''num_cadena : NUMBER
+    | CADENA'''
+
+#Recursividad al agregar elementos de una lista
 def p_elementosLista(p):
-    '''elementosLista : COMILLAS ID COMILLAS
-        | COMILLAS ID COMILLAS COMA elementosLista
-        | COMILLAS NUMBER COMILLAS
-        | COMILLAS NUMBER COMILLAS COMA elementosLista
-        | 
+    '''elementosLista : CADENA
+        | NUMBER
+        | CADENA COMA elementosLista
+        | NUMBER COMA elementosLista
+        |
     '''
 #Operaciones en un mapa: inicializar y agregar elemento
 def p_mapa(p):
@@ -78,21 +77,15 @@ def p_expMapa(p):
     | MAPA ID EQUALS LCURLYB elementosMapa RCURLYB pto_coma
     '''
 
-#Recursividad al agregar elementos de un mapa valor debe cambiarse POR CADENA, valor llama a ID y NUMBER solo necesitamos a number
+#Recursividad al agregar elementos de un mapa
 def p_elementosMapa(p):
-    '''elementosMapa : COMILLAS valor COMILLAS DOSPTO COMILLAS valor COMILLAS
-    | COMILLAS valor COMILLAS DOSPTO COMILLAS valor COMILLAS COMA elementosMapa
-    | COMILLAS valor COMILLAS DOSPTO NUMBER
-    | COMILLAS valor COMILLAS DOSPTO NUMBER COMA elementosMapa
-    | NUMBER DOSPTO COMILLAS valor COMILLAS 
-    | NUMBER DOSPTO COMILLAS valor COMILLAS COMA elementosMapa
-    | NUMBER DOSPTO NUMBER
-    | NUMBER DOSPTO NUMBER COMA elementosMapa
+    '''elementosMapa : num_cadena DOSPTO num_cadena
+    | num_cadena DOSPTO num_cadena COMA elementosMapa
     '''
 
-#Agrega a la ED mapa ID DEBE CAMBIARSE POR CADENA, DEBE DEINIRISE LA REGLA EN EL LEXER
+#Agrega a la ED mapa
 def p_add_mapa(p):
-    '''add_mapa : ID LCORCHETE COMILLAS ID COMILLAS RCORCHETE EQUALS COMILLAS ID COMILLAS pto_coma
+    '''add_mapa : ID LCORCHETE CADENA RCORCHETE EQUALS CADENA pto_coma
     '''
 
 def p_operadorA(p):
@@ -109,37 +102,19 @@ def p_incremento(p):
 def p_decremento(p):
     'decremento : ID DECREMENTO pto_coma'
 
-#Cadenas con comilla simple, doble y triple ID debe cambiarse por CADENA
-def p_i_cadena(p):
-    '''icadena : VAR ID EQUALS cadenas pto_coma
-    '''
 
-def p_valor(p):
-    '''valor : ID 
-    | NUMBER
-    '''
 #Metodo substing de un string
 def p_concatenacion(p):
     '''concatenacion : VAR ID EQUALS ID PTO SUBSTRING LPAREN NUMBER COMA NUMBER RPAREN pto_coma
     '''
 
-def p_cadenas(p):
-    '''cadenas : COMILLAS ID COMILLAS
-    | COMILLAD ID COMILLAD
-    | COMIILLATS ID COMIILLATS
-    | COMILLATD ID COMILLATD
-    '''
+
 #regla de punto y coma
 def p_pto_coma(p):
     'pto_coma : PUNTCOM'
 
-'''
 def p_error(p):
-    print(p)
-'''
-
-def p_error(p):
-    print("Syntax error in input!")
+    print("Syntax error in input!",p)
 
 
 
