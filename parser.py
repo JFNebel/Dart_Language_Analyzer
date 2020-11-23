@@ -3,11 +3,6 @@ from lexer import tokens
 
 '''
 TODO: 
-    1) Arreglar las expresiones booleanas o los booleanos
-    2) Lo que ahora es una expresion booleana realmente es una asignacion de variable del tipo bool
-    3) Idealmente vamos a poner como expresiones booleanas a valores booleanos (true false) y a operaciones de comparacion (mayor que menor que etc) 
-    4) Luego necesitamos asegurarnos de integrar la asignación de variables booleanas en la regla de variables
-    5) Otra opcion seria agregar como booleanos a los comparadores (funciona, pero es chafo) 
     ) Refinar las tres reglas primarias
     ) Hacer un algoritmo de 5 a 10 lineas y capturar las comprobaciones
 '''
@@ -29,7 +24,7 @@ def p_expresion(p):
 def p_variable(p):
     '''variable : VAR ID EQUALS expresionVar PUNTCOM
                 | VAR ID PUNTCOM
-                | expresionBool'''
+                | VAR ID EQUALS expresionBool PUNTCOM'''
 
 def p_valorVar(p):
     '''valorVar : NUMBER
@@ -62,19 +57,36 @@ def p_forAction(p):
                  | DECREMENTO ID'''
 
 def p_expresionWhile(p):
-    'expresionWhile : WHILE LPAREN booleano RPAREN LCURLYB RCURLYB'
-
-
-
+    'expresionWhile : WHILE LPAREN expresionBool RPAREN LCURLYB RCURLYB'
 
 #Allison Brito y JF Nebel
 def p_expresionBool(p):
-    '''expresionBool : VARBOOL ID EQUALS booleano pto_coma
-                     | VAR ID EQUALS booleano pto_coma''' 
+    '''expresionBool : booleano
+                     | ID comparador ID
+                     | ID comparador NUMBER
+                     | NUMBER comparador ID
+                     | NUMBER comparador NUMBER'''
 
 def p_booleano(p):
     '''booleano : TRUE
-    | FALSE'''
+                | FALSE'''
+
+def p_comparador(p):
+    '''comparador : MAYORQUE 
+                  | MENORQUE
+                  | EQUIVAL
+                  | MINEQ
+                  | MAYEQ'''
+
+
+
+
+
+
+
+
+
+
 
 #Allison Brito
 #Regla de expresion de lista
