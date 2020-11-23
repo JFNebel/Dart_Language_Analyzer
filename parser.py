@@ -3,10 +3,9 @@ from lexer import tokens
 
 #Allison Brito
 def p_expresion(p):
-    '''expresion : expresionA
-    | lista
-    | expresionBool
+    '''expresion : lista
     | mapa
+    | variable
     | icadena
     | concatenacion
     | incremento
@@ -15,11 +14,28 @@ def p_expresion(p):
 
 def p_expresionA(p):
     'expresionA : valor operadorA valor'
-   # p[0] = p[1] + p[3]
+
+
+# Juan Nebel
+def p_variable(p):
+    '''variable : VAR ID EQUALS expresionVar PUNTCOM
+                | VAR ID PUNTCOM
+                | expresionBool'''
+
+def p_valorVar(p):
+    '''valorVar : NUMBER
+                | DOUBLE
+                | CADENA'''
+
+def p_expresionVar(p):
+    '''expresionVar : valorVar
+                    | ID 
+                    | expresionVar operadorA expresionVar'''
 
 
 def p_expresionBool(p):
-    'expresionBool : VARBOOL ID EQUALS booleano pto_coma' 
+    '''expresionBool : VARBOOL ID EQUALS booleano pto_coma
+                     | VAR ID EQUALS booleano pto_coma''' 
 
 def p_booleano(p):
     '''booleano : TRUE
@@ -116,10 +132,19 @@ def p_cadenas(p):
 #regla de punto y coma
 def p_pto_coma(p):
     'pto_coma : PUNTCOM'
-   
+
+'''
 def p_error(p):
     print(p)
- # Build the parser
+'''
+
+def p_error(p):
+    print("Syntax error in input!")
+
+
+
+
+# Build the parser
 parser = yacc.yacc()
  
 while True:
