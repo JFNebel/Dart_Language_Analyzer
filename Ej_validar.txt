@@ -1,0 +1,37 @@
+Mapa con comilla simple listo falta con comilla doble
+Ejemplo de lo que si reconoce:
+Map m = {1:2,'3':4,'5':'hola', 'chao': 'bye', 'hello':0, 'goodbye': '9'};
+Faltaría que reconozca
+Map m = {1:2,"3":4,"5":"hola", "chao": "bye", "hello":0, "goodbye": '9'};
+
+#Listas que hay que validar
+void main() {
+  var mapa = new Map();
+  mapa['hola'] ='hola';
+  print(mapa);
+ 
+  
+  Map m = {"1j":2, 'hola c':'chao'};
+  print(m);
+  
+  var $i=0;
+  $i++;
+  print($i);
+  
+  var l = new List(3);
+  l[0] = "hola";
+  l[1] = 2;
+  l[2]="d";
+  print(l);
+  List<dynamic> l2 = [];
+  print(l2);
+  
+  
+  
+  var l3 = new List();
+  l3.add("1");
+  print(l3);
+  
+  var e=[];
+  print(e);
+}
