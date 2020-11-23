@@ -23,6 +23,7 @@ reservadas = {
     'update'       : 'UPDATE',
     'print'        : 'PRINT',
     'substring'    : 'SUBSTRING',
+    'void'         : 'VOID'
 }
 
 # Lista de tokens
@@ -50,10 +51,10 @@ tokens = [
     'DOSPTO',
     'RCURLYB',
     'LCURLYB',
-    'COMILLAD',
-    'COMILLAS',
-    'COMILLATD',
-    'COMIILLATS',
+    # 'COMILLAD',
+    # 'COMILLAS',
+#   'COMILLATD',
+#   'COMIILLATS',
     'COMA',
     'AND',
     'OR',
@@ -73,6 +74,7 @@ t_LISTA      = r'\bList\b'
 t_MAPA       = r'\bMap\b'
 t_SUBSTRING  = r'\bsubstring\b'
 t_ADD        = r'\badd\b'
+t_VOID       = r'\bvoid\b'
 t_INCREMENTO = r"\+\+"
 t_DECREMENTO = r'\-\-'
 t_PLUS       = r'\+'
@@ -85,8 +87,8 @@ t_DIVIDE_E   = r'\~\/'
 t_LPAREN     = r'\('
 t_RPAREN     = r'\)'
 t_LCORCHETE  = r'\['
-t_COMILLAD   = r'\"'
-t_COMILLAS   = r'\''
+# t_COMILLAD   = r'\"'
+# t_COMILLAS   = r'\''
 t_COMA       = r'\,'
 t_RCORCHETE  = r'\]'
 t_MAYORQUE   = r'>'
@@ -97,8 +99,8 @@ t_DOSPTO     = r':'
 t_AND        = r'\&\&'
 t_OR         = r'\|\|'
 t_NOT        = r'\!'
-t_COMIILLATS = r'\'\'\''
-t_COMILLATD  = r'\"\"\"'
+#t_COMIILLATS = r'\'\'\''
+#t_COMILLATD  = r'\"\"\"'
 t_PUT        = r'\bputIfAbsent\b'
 t_UPDATE     = r'\bupdate\b'
 t_PTO        = r'\.'
