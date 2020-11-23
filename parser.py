@@ -1,11 +1,25 @@
 import ply.yacc as yacc
 from lexer import tokens
 
+'''
+TODO: 
+    1) Arreglar las expresiones booleanas o los booleanos
+    2) Lo que ahora es una expresion booleana realmente es una asignacion de variable del tipo bool
+    3) Idealmente vamos a poner como expresiones booleanas a valores booleanos (true false) y a operaciones de comparacion (mayor que menor que etc) 
+    4) Luego necesitamos asegurarnos de integrar la asignación de variables booleanas en la regla de variables
+    5) Otra opcion seria agregar como booleanos a los comparadores (funciona, pero es chafo) 
+    ) Refinar las tres reglas primarias
+    ) Hacer un algoritmo de 5 a 10 lineas y capturar las comprobaciones
+'''
+
+
+
 def p_expresion(p):
     '''expresion : lista
     | mapa
     | variable
     | expresionFor
+    | expresionWhile
     | concatenacion
     | incremento
     | decremento
@@ -47,9 +61,8 @@ def p_forAction(p):
                  | INCREMENTO ID
                  | DECREMENTO ID'''
 
-
-
-
+def p_expresionWhile(p):
+    'expresionWhile : WHILE LPAREN booleano RPAREN LCURLYB RCURLYB'
 
 
 
