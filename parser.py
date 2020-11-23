@@ -5,6 +5,7 @@ def p_expresion(p):
     '''expresion : lista
     | mapa
     | variable
+    | expresionFor
     | concatenacion
     | incremento
     | decremento
@@ -25,6 +26,33 @@ def p_expresionVar(p):
     '''expresionVar : valorVar
                     | ID 
                     | expresionVar operadorA expresionVar'''
+
+def p_expresionFor(p):
+    'expresionFor : FOR LPAREN forParameters RPAREN LCURLYB RCURLYB'   
+
+def p_forParameters(p):
+    'forParameters : forIterator PUNTCOM forCondition PUNTCOM forAction'
+
+def p_forIterator(p):
+    '''forIterator : INT ID EQUALS NUMBER
+                   | ID EQUALS NUMBER'''
+
+def p_forCondition(p):
+    '''forCondition : ID MAYORQUE NUMBER 
+                    | ID MENORQUE NUMBER '''
+
+def p_forAction(p):
+    '''forAction : ID INCREMENTO  
+                 | ID DECREMENTO
+                 | INCREMENTO ID
+                 | DECREMENTO ID'''
+
+
+
+
+
+
+
 
 #Allison Brito y JF Nebel
 def p_expresionBool(p):
@@ -121,7 +149,6 @@ def p_error(p):
 
 # Build the parser
 parser = yacc.yacc()
- 
 while True:
     try:
         s = input('Ingrese el codigo > ')

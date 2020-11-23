@@ -144,7 +144,7 @@ lexer = lex.lex()
 archivo = 'codigo.txt'
 fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
 
-
+'''
 for data in fichero.readlines():
     if(data[0]!='#'):
         print("\n") #Deja un espacio entre frases
@@ -161,3 +161,4 @@ for data in fichero.readlines():
                 if not tok:
                     break  # No more input
                 print(tok)
+'''
