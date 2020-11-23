@@ -12,13 +12,17 @@ reservadas = {
     'int'          : 'INT',
     'double'       : 'VARDOUBLE',
     'bool'         : 'VARBOOL',
+    'true'         : 'TRUE',
+    'false'        : 'FALSE',
     'while'        : 'WHILE',
     'new'          : 'NEW',
     'List'         : 'LISTA',
+    'add'          : 'ADD',
     'Map'          : 'MAPA',
     'putIfAbsent'  : 'PUT',
     'update'       : 'UPDATE',
     'print'        : 'PRINT',
+    'substring'    : 'SUBSTRING',
 }
 
 # Lista de tokens
@@ -26,10 +30,10 @@ tokens = [
     'NUMBER',
     'INCREMENTO',
     'DECREMENTO',
-    'BOOLEANO',
     'DOUBLE',
     'ID',
     'PLUS',
+    'PTO',
     'MINUS',
     'TIMES',
     'DIVIDE',
@@ -42,10 +46,14 @@ tokens = [
     'MENORQUE',
     'EQUALS',
     'PUNTCOM',
+    'DOSPTO',
     'RCURLYB',
     'LCURLYB',
     'COMILLAD',
     'COMILLAS',
+    'COMILLATD',
+    'COMIILLATS',
+    'CADENA',
     'COMA',
     'AND',
     'OR',
@@ -57,17 +65,20 @@ t_VAR        = r'\bvar\b'
 t_FOR        = r'\bfor\b'
 t_INT        = r'\bint\b'
 t_WHILE      = r'\bwhile\b'
+t_TRUE       = r'\btrue\b'
+t_FALSE      = r'\bfalse\b'
 t_VARDOUBLE  = r'\bdouble\b'
 t_VARBOOL    = r'\bbool\b'
-t_BOOLEANO   = r'\b(true|false)\b'
 t_LISTA      = r'\bList\b'
 t_MAPA       = r'\bMap\b'
+t_SUBSTRING  = r'\bsubstring\b'
+t_ADD        = r'\badd\b'
 t_INCREMENTO = r"\+\+"
 t_DECREMENTO = r'\-\-'
 t_PLUS       = r'\+'
 t_RCURLYB    = r'\}'
 t_LCURLYB    = r'\{'
-t_MINUS      = r'-'
+t_MINUS      = r'\-'
 t_TIMES      = r'\*'
 t_DIVIDE     = r'\/'
 t_DIVIDE_E   = r'\~\/'
@@ -80,13 +91,17 @@ t_COMA       = r'\,'
 t_RCORCHETE  = r'\]'
 t_MAYORQUE   = r'>'
 t_MENORQUE   = r'<'
-t_EQUALS     = r'\='
+t_EQUALS     = r'='
 t_PUNTCOM    = r'\;'
+t_DOSPTO     = r':'
 t_AND        = r'\&\&'
 t_OR         = r'\|\|'
 t_NOT        = r'\!'
-t_PUT        = r'\b\.putIfAbsent\b'
-t_UPDATE     = r'\b\.update\b'
+t_COMIILLATS = r'\'\'\''
+t_COMILLATD  = r'\"\"\"'
+t_PUT        = r'\bputIfAbsent\b'
+t_UPDATE     = r'\bupdate\b'
+t_PTO        = r'\.'
 t_PRINT      = r'\bprint\b'
 
 t_ignore     = r'     '  # ignore espacio o tab, usar caracteres \t saca un warning
@@ -99,8 +114,8 @@ def t_DOUBLE(t):
 
 #Numeros enteros
 def t_NUMBER(t):
-    r'[\d]+'
-    t.type = reservadas.get(t.value, 'NUMBER')
+    r'\d+'
+    t.type = reservadas.get(int(t.value), 'NUMBER')
     return t
 
 #Salto de línea
@@ -111,9 +126,13 @@ def t_newline(t):
 #Id(variables)
 def t_ID(t):
     r'\$?[\w]+'
-    t.type = reservadas.get(t.value,'ID')    # Check for reserved words
+    t.type = reservadas.get(str(t.value),'ID')    # Check for reserved words
     return t
 
+# def t_CADENA(t):
+#     r'\'[^=^#].*[^;^\n]\''
+#     t.value = str(t.value)    
+#     return t
 
 # Manejo de errores
 def t_error(t):
@@ -122,6 +141,9 @@ def t_error(t):
 
 # Construyendo al lexer
 lexer = lex.lex()
+
+
+
 archivo = 'codigo.txt'
 fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
 
@@ -135,10 +157,10 @@ for data in fichero.readlines():
             break
         else:
             lexer.input(data)
-
             # Iteración de tokens
             while True:
                 tok = lexer.token()
                 if not tok:
                     break  # No more input
                 print(tok)
+
