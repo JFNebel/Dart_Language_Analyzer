@@ -96,55 +96,55 @@ def p_comparador(p):
 #Regla de expresion de lista
 def p_lista(p):
     '''lista : expLista
-    | add_lista
+             | add_lista
     '''
 #Inicializacion de una lista
 def p_expLista(p):
     '''expLista : VAR ID EQUALS NEW LISTA LPAREN inicializaLista RPAREN pto_coma
-        | VAR ID EQUALS LCORCHETE elementosLista RCORCHETE pto_coma
-        '''
+                | VAR ID EQUALS LCORCHETE elementosLista RCORCHETE pto_coma
+    '''
 #Valor que se le asigna al momento de declarar el # de elementos de un mapa
 def p_inicializaLista(p):
     '''inicializaLista  : NUMBER
-    | 
+                        | 
     '''
 #Agregar elementos a una lista
 def p_add_lista(p):
     '''add_lista : ID LCORCHETE NUMBER RCORCHETE EQUALS num_cadena pto_coma
-    | ID PTO ADD LPAREN elementoAddLista RPAREN pto_coma
+                 | ID PTO ADD LPAREN elementoAddLista RPAREN pto_coma
     '''
 def p_elementoAddLista(p):
     '''elementoAddLista : num_cadena
-    | booleano
+                        | booleano
     '''
 #Toma el valor de un numero o de un string con comillas incluido
 def p_num_cadena(p):
     '''num_cadena : NUMBER
-    | CADENA'''
+                | CADENA'''
 #Recursividad al agregar elementos de una lista
 def p_elementosLista(p):
     '''elementosLista : CADENA
-        | NUMBER
-        | CADENA COMA elementosLista
-        | NUMBER COMA elementosLista
-        | 
+                      | NUMBER
+                      | CADENA COMA elementosLista
+                      | NUMBER COMA elementosLista
+                      | 
     '''
 # *********************** ED MAPA (Allison Brito) *****************************
 #Operaciones en un mapa: inicializar y agregar elemento
 def p_mapa(p):
     '''mapa : expMapa
-    | add_mapa
+            | add_mapa
     '''
 #Inicializacion de un mapa
 def p_expMapa(p):
     '''expMapa : VAR ID EQUALS NEW MAPA LPAREN RPAREN pto_coma
-    | MAPA ID EQUALS LCURLYB elementosMapa RCURLYB pto_coma
+               | MAPA ID EQUALS LCURLYB elementosMapa RCURLYB pto_coma
     '''
 
 #Recursividad al agregar elementos de un mapa
 def p_elementosMapa(p):
     '''elementosMapa : num_cadena DOSPTO num_cadena
-    | num_cadena DOSPTO num_cadena COMA elementosMapa
+                     | num_cadena DOSPTO num_cadena COMA elementosMapa
     '''
 
 #Agrega a la ED mapa
@@ -154,10 +154,10 @@ def p_add_mapa(p):
 # *********************** OPERADORES ARITMETICOS (Allison Brito) *****************************
 def p_operadorA(p):
     '''operadorA : PLUS
-    | MINUS
-    | TIMES
-    | DIVIDE
-    | DIVIDE_E
+                 | MINUS
+                 | TIMES
+                 | DIVIDE
+                 | DIVIDE_E
     '''
 # *********************** OPERADORES INCREMENTO Y DECREMENTO (Allison Brito) *****************************
 def p_incremento(p):
@@ -179,8 +179,8 @@ def p_print(p):
 #Datos que puede tomar al imprimir
 def p_printVal(p):
     '''printVal : ID
-    | valorVar
-    | expresionBool
+                | valorVar
+                | expresionBool
     '''
 
 # *********************** FUNCION (Allison Brito) *****************************
@@ -191,7 +191,7 @@ def p_funcion(p):
 
 def p_final_key(p):
     '''final_key : LCURLYB expresion RCURLYB
-    |   LCURLYB RCURLYB
+                 |   LCURLYB RCURLYB
     '''
 
 #regla de punto y coma
