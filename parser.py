@@ -1,13 +1,12 @@
 import ply.yacc as yacc
 from lexer import tokens
 
+
 '''
 TODO: 
     ) Refinar las tres reglas primarias
     ) Hacer un algoritmo de 5 a 10 lineas y capturar las comprobaciones
 '''
-
-
 
 def p_expresion(p):
     '''expresion : lista
@@ -18,6 +17,9 @@ def p_expresion(p):
     | concatenacion
     | incremento
     | decremento
+    | print
+    | funcion
+    | expresion expresion
     '''
 
 # Juan Nebel
@@ -96,16 +98,26 @@ def p_lista(p):
     '''
 #Inicializacion de una lista
 def p_expLista(p):
-    '''expLista : VAR ID EQUALS NEW LISTA LPAREN NUMBER RPAREN pto_coma
-        | VAR ID EQUALS NEW LISTA LPAREN RPAREN pto_coma
+    '''expLista : VAR ID EQUALS NEW LISTA LPAREN inicializaLista RPAREN pto_coma
         | VAR ID EQUALS LCORCHETE elementosLista RCORCHETE pto_coma
         '''
+#Valor que se le asigna al momento de declarar el # de elementos de un mapa
+def p_inicializaLista(p):
+    '''inicializaLista  : NUMBER
+    | 
+    '''
 
 #Agregar elementos a una lista
 def p_add_lista(p):
     '''add_lista : ID LCORCHETE NUMBER RCORCHETE EQUALS num_cadena pto_coma
-    | ID PTO ADD LPAREN num_cadena RPAREN pto_coma
+    | ID PTO ADD LPAREN elementoAddLista RPAREN pto_coma
     '''
+
+def p_elementoAddLista(p):
+    '''elementoAddLista : num_cadena
+    | booleano
+    '''
+
 #Toma el valor de un numero o de un string con comillas incluido
 def p_num_cadena(p):
     '''num_cadena : NUMBER
@@ -117,7 +129,7 @@ def p_elementosLista(p):
         | NUMBER
         | CADENA COMA elementosLista
         | NUMBER COMA elementosLista
-        |
+        | 
     '''
 #Operaciones en un mapa: inicializar y agregar elemento
 def p_mapa(p):
@@ -160,7 +172,21 @@ def p_decremento(p):
 def p_concatenacion(p):
     '''concatenacion : VAR ID EQUALS ID PTO SUBSTRING LPAREN NUMBER COMA NUMBER RPAREN pto_coma
     '''
+#Imprimir datos
+def p_print(p):
+    '''print : PRINT LPAREN printVal RPAREN pto_coma
+    '''
 
+def p_printVal(p):
+    '''printVal : ID
+    | valorVar
+    | expresionBool
+    '''
+
+#Construir una funcion
+def p_funcion(p):
+    '''funcion : VOID ID LPAREN RPAREN LCURLYB expresion RCURLYB
+    '''
 
 #regla de punto y coma
 def p_pto_coma(p):

@@ -26,6 +26,7 @@ var s1=s.substring(0,3);
 l[0]=1;
 l[0]="1";
 void funcion(){}
+var i = 2<=4;
 # ********************************* Ejemplos Juan Nebel *****************************************
 var variable;
 var variable=20;

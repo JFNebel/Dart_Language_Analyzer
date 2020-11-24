@@ -27,7 +27,9 @@ void main() {
   print(l2);
   
   
-  
+  void p(){var r=2; var t=4;} 
+  void main(){ var p=1;} void p(){print(2);}
+  void main(){ var p=1;} void p(){print(2);} void r(){ var r=2;}
   var l3 = new List();
   l3.add("1");
   print(l3);

@@ -23,6 +23,7 @@ reservadas = {
     'update'       : 'UPDATE',
     'print'        : 'PRINT',
     'substring'    : 'SUBSTRING',
+    'void'         : 'VOID'
 }
 
 # Lista de tokens
@@ -53,10 +54,10 @@ tokens = [
     'DOSPTO',
     'RCURLYB',
     'LCURLYB',
-    'COMILLAD',
-    'COMILLAS',
-    'COMILLATD',
-    'COMIILLATS',
+    # 'COMILLAD',
+    # 'COMILLAS',
+#   'COMILLATD',
+#   'COMIILLATS',
     'COMA',
     'AND',
     'OR',
@@ -76,6 +77,7 @@ t_LISTA      = r'\bList\b'
 t_MAPA       = r'\bMap\b'
 t_SUBSTRING  = r'\bsubstring\b'
 t_ADD        = r'\badd\b'
+t_VOID       = r'\bvoid\b'
 t_INCREMENTO = r"\+\+"
 t_DECREMENTO = r'\-\-'
 t_EQUIVAL    = r'=='
@@ -91,8 +93,8 @@ t_DIVIDE_E   = r'\~\/'
 t_LPAREN     = r'\('
 t_RPAREN     = r'\)'
 t_LCORCHETE  = r'\['
-t_COMILLAD   = r'\"'
-t_COMILLAS   = r'\''
+# t_COMILLAD   = r'\"'
+# t_COMILLAS   = r'\''
 t_COMA       = r'\,'
 t_RCORCHETE  = r'\]'
 t_MAYORQUE   = r'>'
@@ -103,8 +105,8 @@ t_DOSPTO     = r':'
 t_AND        = r'\&\&'
 t_OR         = r'\|\|'
 t_NOT        = r'\!'
-t_COMIILLATS = r'\'\'\''
-t_COMILLATD  = r'\"\"\"'
+#t_COMIILLATS = r'\'\'\''
+#t_COMILLATD  = r'\"\"\"'
 t_PUT        = r'\bputIfAbsent\b'
 t_UPDATE     = r'\bupdate\b'
 t_PTO        = r'\.'
@@ -150,7 +152,7 @@ lexer = lex.lex()
 archivo = 'codigo.txt'
 fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
 
-'''
+
 for data in fichero.readlines():
     if(data[0]!='#'):
         print("\n") #Deja un espacio entre frases
@@ -167,4 +169,4 @@ for data in fichero.readlines():
                 if not tok:
                     break  # No more input
                 print(tok)
-'''
+
