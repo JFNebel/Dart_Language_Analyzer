@@ -1,12 +1,9 @@
 import ply.yacc as yacc
 from lexer import tokens
+import os
 
 
-'''
-TODO: 
-    ) Refinar las tres reglas primarias
-    ) Hacer un algoritmo de 5 a 10 lineas y capturar las comprobaciones
-'''
+# *********************** Expresión global (Allison Brito y Juan Nebel) *****************************
 
 def p_expresion(p):
     '''expresion : lista
@@ -14,6 +11,7 @@ def p_expresion(p):
     | variable
     | expresionFor
     | expresionWhile
+    | expresionIf
     | concatenacion
     | incremento
     | decremento
@@ -22,7 +20,8 @@ def p_expresion(p):
     | expresion expresion
     '''
 
-# Juan Nebel
+# *********************** DECLARACIÓN DE VARIABLE (Juan Nebel) *****************************
+
 def p_variable(p):
     '''variable : VAR ID EQUALS expresionVar PUNTCOM
                 | VAR ID PUNTCOM
@@ -38,8 +37,10 @@ def p_expresionVar(p):
                     | ID 
                     | expresionVar operadorA expresionVar'''
 
+# *********************** ESTRUCTURA FOR (Juan Nebel) *****************************
+
 def p_expresionFor(p):
-    'expresionFor : FOR LPAREN forParameters RPAREN LCURLYB RCURLYB'   
+    'expresionFor : FOR LPAREN forParameters RPAREN LCURLYB expresion RCURLYB'   
 
 def p_forParameters(p):
     'forParameters : forIterator PUNTCOM forCondition PUNTCOM forAction'
@@ -58,16 +59,25 @@ def p_forAction(p):
                  | INCREMENTO ID
                  | DECREMENTO ID'''
 
-def p_expresionWhile(p):
-    'expresionWhile : WHILE LPAREN expresionBool RPAREN LCURLYB RCURLYB'
+# *********************** ESTRUCTURA WHILE (Juan Nebel) *****************************
 
-#Allison Brito y JF Nebel
+def p_expresionWhile(p):
+    'expresionWhile : WHILE LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB'
+
+# *********************** ESTRUCTURA IF (Juan Nebel) *****************************
+
+def p_expresionIf(p):
+    'expresionIf : IF LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB'
+
+# *********************** REGLAS BOOL (Allison Brito y Juan Nebel) *****************************
+
 def p_expresionBool(p):
     '''expresionBool : booleano
                      | ID comparador ID
                      | ID comparador NUMBER
                      | NUMBER comparador ID
-                     | NUMBER comparador NUMBER'''
+                     | NUMBER comparador NUMBER
+                     | expresionBool EQUIVAL expresionBool''' #No estoy seguro porque no puedo concatenar
 
 def p_booleano(p):
     '''booleano : TRUE
@@ -82,15 +92,7 @@ def p_comparador(p):
 
 
 
-
-
-
-
-
-
-
-
-#Allison Brito
+# *********************** ED LISTA (Allison Brito) *****************************
 #Regla de expresion de lista
 def p_lista(p):
     '''lista : expLista
@@ -106,23 +108,19 @@ def p_inicializaLista(p):
     '''inicializaLista  : NUMBER
     | 
     '''
-
 #Agregar elementos a una lista
 def p_add_lista(p):
     '''add_lista : ID LCORCHETE NUMBER RCORCHETE EQUALS num_cadena pto_coma
     | ID PTO ADD LPAREN elementoAddLista RPAREN pto_coma
     '''
-
 def p_elementoAddLista(p):
     '''elementoAddLista : num_cadena
     | booleano
     '''
-
 #Toma el valor de un numero o de un string con comillas incluido
 def p_num_cadena(p):
     '''num_cadena : NUMBER
     | CADENA'''
-
 #Recursividad al agregar elementos de una lista
 def p_elementosLista(p):
     '''elementosLista : CADENA
@@ -131,6 +129,7 @@ def p_elementosLista(p):
         | NUMBER COMA elementosLista
         | 
     '''
+# *********************** ED MAPA (Allison Brito) *****************************
 #Operaciones en un mapa: inicializar y agregar elemento
 def p_mapa(p):
     '''mapa : expMapa
@@ -152,7 +151,7 @@ def p_elementosMapa(p):
 def p_add_mapa(p):
     '''add_mapa : ID LCORCHETE CADENA RCORCHETE EQUALS CADENA pto_coma
     '''
-
+# *********************** OPERADORES ARITMETICOS (Allison Brito) *****************************
 def p_operadorA(p):
     '''operadorA : PLUS
     | MINUS
@@ -160,32 +159,39 @@ def p_operadorA(p):
     | DIVIDE
     | DIVIDE_E
     '''
-
+# *********************** OPERADORES INCREMENTO Y DECREMENTO (Allison Brito) *****************************
 def p_incremento(p):
     'incremento : ID INCREMENTO pto_coma'
 
 def p_decremento(p):
     'decremento : ID DECREMENTO pto_coma'
 
-
+# *********************** CONCATENAR STRING (Allison Brito) *****************************
 #Metodo substing de un string
 def p_concatenacion(p):
     '''concatenacion : VAR ID EQUALS ID PTO SUBSTRING LPAREN NUMBER COMA NUMBER RPAREN pto_coma
     '''
+# *********************** IMPRIMIR VARIABLES/DATO (Allison Brito) *****************************
 #Imprimir datos
 def p_print(p):
     '''print : PRINT LPAREN printVal RPAREN pto_coma
     '''
-
+#Datos que puede tomar al imprimir
 def p_printVal(p):
     '''printVal : ID
     | valorVar
     | expresionBool
     '''
 
+# *********************** FUNCION (Allison Brito) *****************************
 #Construir una funcion
 def p_funcion(p):
-    '''funcion : VOID ID LPAREN RPAREN LCURLYB expresion RCURLYB
+    '''funcion : VOID ID LPAREN RPAREN final_key
+    '''
+
+def p_final_key(p):
+    '''final_key : LCURLYB expresion RCURLYB
+    |   LCURLYB RCURLYB
     '''
 
 #regla de punto y coma
@@ -197,14 +203,18 @@ def p_error(p):
 
 
 
-
-# Build the parser
 parser = yacc.yacc()
-while True:
-    try:
-        s = input('Ingrese el codigo > ')
-    except EOFError:
-        break
-    if not s: continue
-    result = parser.parse(s)
-    print(result)
+archivo = 'codigoAlg.txt'
+fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
+for data in fichero.readlines():
+    if(data[0]!='#'):
+        print("\n") #Deja un espacio entre frases
+        print("*************************************************************")
+        print("La frase a analizar es: ", data)
+        
+        # Darle el input al parser
+        if len(data)==0:
+            break
+        else:
+            result = parser.parse(data)
+            print(result)

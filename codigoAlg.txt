@@ -1,0 +1,15 @@
+# ********************************* Ejemplos Juan Nebel *****************************************
+for(int i = 0; i < 10; i++){var x = 20;var y = 30;if(x>y){var z = x + y;}}
+# ********************************* Ejemplos Allison Brito **************************************
+void mostrar(){}
+    var lista =[];
+    lista[0] = "Hola";
+    lista[1] = "Soy Allison";
+    print(lista);
+    var $num=0;
+    var n_ = $num *2;
+    print(n_);
+    var mapa = new Map();
+    mapa['hello'] ='goodbye';
+    print(mapa);
+void imprime(){print("Soy un print!!!");}
