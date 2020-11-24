@@ -5,9 +5,11 @@ from lexer import tokens
 TODO: 
     ) Refinar las tres reglas primarias
     ) Hacer un algoritmo de 5 a 10 lineas y capturar las comprobaciones
+    ) Chequear reglas repetidas
 '''
 
 
+# *********************** Expresión global (Allison Brito y Juan Nebel) *****************************
 
 def p_expresion(p):
     '''expresion : lista
@@ -15,12 +17,15 @@ def p_expresion(p):
     | variable
     | expresionFor
     | expresionWhile
+    | expresionIf
     | concatenacion
     | incremento
     | decremento
+    | expresion expresion
     '''
 
-# Juan Nebel
+# *********************** DECLARACIÓN DE VARIABLE (Juan Nebel) *****************************
+
 def p_variable(p):
     '''variable : VAR ID EQUALS expresionVar PUNTCOM
                 | VAR ID PUNTCOM
@@ -36,8 +41,10 @@ def p_expresionVar(p):
                     | ID 
                     | expresionVar operadorA expresionVar'''
 
+# *********************** ESTRUCTURA FOR (Juan Nebel) *****************************
+
 def p_expresionFor(p):
-    'expresionFor : FOR LPAREN forParameters RPAREN LCURLYB RCURLYB'   
+    'expresionFor : FOR LPAREN forParameters RPAREN LCURLYB expresion RCURLYB'   
 
 def p_forParameters(p):
     'forParameters : forIterator PUNTCOM forCondition PUNTCOM forAction'
@@ -56,16 +63,26 @@ def p_forAction(p):
                  | INCREMENTO ID
                  | DECREMENTO ID'''
 
-def p_expresionWhile(p):
-    'expresionWhile : WHILE LPAREN expresionBool RPAREN LCURLYB RCURLYB'
+# *********************** ESTRUCTURA WHILE (Juan Nebel) *****************************
 
-#Allison Brito y JF Nebel
+def p_expresionWhile(p):
+    'expresionWhile : WHILE LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB'
+
+# *********************** ESTRUCTURA IF (Juan Nebel) *****************************
+
+def p_expresionIf(p):
+    'expresionIf : IF LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB'
+
+# *********************** REGLAS BOOL (Allison Brito y Juan Nebel) *****************************
+
 def p_expresionBool(p):
     '''expresionBool : booleano
                      | ID comparador ID
                      | ID comparador NUMBER
                      | NUMBER comparador ID
-                     | NUMBER comparador NUMBER'''
+                     | NUMBER comparador NUMBER
+                     | ID EQUIVAL booleano
+                     | booleano EQUIVAL ID'''
 
 def p_booleano(p):
     '''booleano : TRUE

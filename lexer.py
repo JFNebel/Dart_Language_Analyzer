@@ -18,6 +18,7 @@ reservadas = {
     'new'          : 'NEW',
     'List'         : 'LISTA',
     'add'          : 'ADD',
+    'if'           : 'IF',
     'Map'          : 'MAPA',
     'putIfAbsent'  : 'PUT',
     'update'       : 'UPDATE',
@@ -65,6 +66,7 @@ tokens = [
     
 #Expresiones regulares:
 t_VAR        = r'\bvar\b'
+t_IF         = r'\bif\b'
 t_FOR        = r'\bfor\b'
 t_INT        = r'\bint\b'
 t_WHILE      = r'\bwhile\b'
@@ -167,4 +169,4 @@ for data in fichero.readlines():
                 if not tok:
                     break  # No more input
                 print(tok)
-'''
+                '''
