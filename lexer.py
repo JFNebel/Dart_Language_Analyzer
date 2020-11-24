@@ -149,9 +149,8 @@ lexer = lex.lex()
 
 
 
-archivo = 'codigo.txt'
+archivo = 'codigoAlg.txt'
 fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
-
 '''
 for data in fichero.readlines():
     if(data[0]!='#'):

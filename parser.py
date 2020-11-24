@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from lexer import tokens
+import os
 
 '''
 TODO: 
@@ -187,7 +188,25 @@ def p_error(p):
 
 
 
+parser = yacc.yacc()
+archivo = 'codigoAlg.txt'
+fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
 
+for data in fichero.readlines():
+    if(data[0]!='#'):
+        print("\n") #Deja un espacio entre frases
+        print("*************************************************************")
+        print("La frase a analizar es: ", data)
+        
+        # Darle el input al parser
+        if len(data)==0:
+            break
+        else:
+            result = parser.parse(data)
+            print(result)
+
+
+'''
 # Build the parser
 parser = yacc.yacc()
 while True:
@@ -198,3 +217,4 @@ while True:
     if not s: continue
     result = parser.parse(s)
     print(result)
+    '''
