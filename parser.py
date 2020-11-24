@@ -81,8 +81,7 @@ def p_expresionBool(p):
                      | ID comparador NUMBER
                      | NUMBER comparador ID
                      | NUMBER comparador NUMBER
-                     | ID EQUIVAL booleano
-                     | booleano EQUIVAL ID'''
+                     | expresionBool EQUIVAL expresionBool''' #No estoy seguro porque no puedo concatenar
 
 def p_booleano(p):
     '''booleano : TRUE
