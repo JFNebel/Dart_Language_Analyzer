@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from lexer import lexer, errores
 
 
 
@@ -61,19 +62,18 @@ class MainWindow(QMainWindow):
         toolbar.addAction(button_syntax) # Esto añade el botón del lexer
 
 
-
-
         #Text Area Input
-        self.b = QPlainTextEdit(self)
-        self.b.move(0,95)
-        self.b.resize(360,480)
+        self.input = QPlainTextEdit(self)
+        self.input.move(0,95)
+        self.input.resize(360,480)
+
 
         # Text Area Output
-        self.b = QPlainTextEdit(self)
-        self.b.insertPlainText("Aquí sale tu resultado rey!\n")
-        self.b.move(360,95)
-        self.b.resize(360,480)
-        self.b.setReadOnly(True)
+        self.output = QPlainTextEdit(self)
+        self.output.insertPlainText("Aquí sale tu resultado rey!\n")
+        self.output.move(360,95)
+        self.output.resize(360,480)
+        self.output.setReadOnly(True)
 
         # Añadir más widgets
         # toolbar.addWidget(QLabel("FIN?"))
@@ -96,8 +96,34 @@ class MainWindow(QMainWindow):
     
     # El slot del lexer
     def onMyToolbarButtonLexico(self, s, label):
-        print("Se activa el slot del lexer ",s )
-        label.setText("Tokenizar finalizado")
+        errores.clear()
+        self.output.setPlainText("")
+        
+        print("Se activa el lexer ")
+        data = self.input.toPlainText()
+        #print(data)
+
+        lexer.input(data)
+        while True:
+            tok = lexer.token()
+            if not tok:
+                break  # No more input
+
+        self.output.insertPlainText("Los errores detectados son: " + str (len(errores)) + "\n")
+        for i in errores:
+            self.output.insertPlainText(i + "\n")
+            
+
+
+
+
+
+
+
+
+        # self.output.setPlainText(input)
+
+
 
     def onMyToolbarButtonSyntax(self, s, label):
         print("Se activa el slot del syntax ",s )

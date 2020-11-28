@@ -5,6 +5,11 @@ Integrantes: Allison Brito y Juan Fco. Nebel
 import os
 import ply.lex as lex
 
+# Lista de errores
+
+errores = []
+
+
 # Diccionario de palabras reservadas
 reservadas = {
     'for'          : 'FOR',
@@ -115,7 +120,7 @@ t_PTO        = r'\.'
 t_PRINT      = r'\bprint\b'
 t_CADENA     = r'(\'|\")[\w\s\?#$%&()=|°¬!]*(\'|\")'
 
-t_ignore     = r' \t\n'  # ignore espacio o tab, usar caracteres \t saca un warning
+t_ignore     = r' \t'  # ignore espacio o tab, usar caracteres \t saca un warning
 
 #Numeros decimales
 def t_DOUBLE(t):
@@ -143,7 +148,7 @@ def t_ID(t):
 
 # Manejo de errores
 def t_error(t):
-    print("No es reconocido '%s'" % t.value[0])
+    errores.append("No es reconocido '%s'" % t.value[0])
     t.lexer.skip(1)
 
 # Construyendo al lexer
