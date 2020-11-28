@@ -1,5 +1,3 @@
-# ********************************* Ejemplos Juan Nebel *****************************************
-for(int i = 0; i < 10; i++){var x = 20;var y = 30;if(x>y){var z = x + y;}}
 # ********************************* Ejemplos Allison Brito **************************************
 void mostrar(){}
     var lista =[];
@@ -13,3 +11,11 @@ void mostrar(){}
     mapa['hello'] ='goodbye';
     print(mapa);
 void imprime(){print("Soy un print!!!");}
+# ********************************* Ejemplos Juan Nebel *****************************************
+for(int i = 0; i < 10; i++){
+    var x = 20;
+    var y = 30;
+    if(x>y){
+        var z = x + y;
+    }
+}

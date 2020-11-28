@@ -204,17 +204,36 @@ def p_error(p):
 
 
 parser = yacc.yacc()
-archivo = 'codigoAlg.txt'
-fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
-for data in fichero.readlines():
-    if(data[0]!='#'):
-        print("\n") #Deja un espacio entre frases
-        print("*************************************************************")
-        print("La frase a analizar es: ", data)
+
+data = '''for(int i = 0; i < 10; i++){
+    var x = 20;
+    var y = 30;
+    if(x>y){
+        var z = x + y;
+    }
+}'''
+
+result = parser.parse(data)
+print("*************************************************************")
+print("La frase a analizar es: ", data)
+print(result)
+
+
+
+
+
+
+# archivo = 'codigoAlg.txt'
+# fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
+# for data in fichero.readlines():
+#     if(data[0]!='#'):
+#         print("\n") #Deja un espacio entre frases
+#         print("*************************************************************")
+#         print("La frase a analizar es: ", data)
         
-        # Darle el input al parser
-        if len(data)==0:
-            break
-        else:
-            result = parser.parse(data)
-            print(result)
+#         # Darle el input al parser
+#         if len(data)==0:
+#             break
+#         else:
+#             result = parser.parse(data)
+#             print(result)

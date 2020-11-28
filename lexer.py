@@ -115,7 +115,7 @@ t_PTO        = r'\.'
 t_PRINT      = r'\bprint\b'
 t_CADENA     = r'(\'|\")[\w\s\?#$%&()=|°¬!]*(\'|\")'
 
-t_ignore     = r'     '  # ignore espacio o tab, usar caracteres \t saca un warning
+t_ignore     = r' \t\n'  # ignore espacio o tab, usar caracteres \t saca un warning
 
 #Numeros decimales
 def t_DOUBLE(t):
@@ -151,22 +151,45 @@ lexer = lex.lex()
 
 
 
-archivo = 'codigoAlg.txt'
-fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
 
-for data in fichero.readlines():
-    if(data[0]!='#'):
-        print("\n") #Deja un espacio entre frases
-        print("*************************************************************")
-        print("La frase a analizar es: ", data)
-        # Darle el input al lexer
-        if len(data)==0:
-            break
-        else:
-            lexer.input(data)
-            # Iteración de tokens
-            while True:
-                tok = lexer.token()
-                if not tok:
-                    break  # No more input
-                print(tok)
+
+
+data = '''for(int i = 0; i < 10; i++){
+    var x = 20;
+    var y = 30;
+    if(x>y){
+        var z = x + y;
+    }
+}'''
+
+# lexer.input(data)
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break  # No more input
+#     print(tok)
+
+
+
+
+
+# archivo = 'codigoAlg.txt'
+# fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")
+
+# for data in fichero.readlines():
+#     if(data[0]!='#'):
+#         print("\n") #Deja un espacio entre frases
+#         print("*************************************************************")
+#         print("La frase a analizar es: ", data)
+#         # Darle el input al lexer
+#         if len(data)==0:
+#             break
+#         else:
+#             lexer.input(data)
+#             # Iteración de tokens
+#             while True:
+#                 tok = lexer.token()
+#                 if not tok:
+#                     break  # No more input
+#                 print(tok)
+
