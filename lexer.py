@@ -7,7 +7,7 @@ import ply.lex as lex
 
 # Lista de errores
 
-errores = []
+erroresL = []
 
 
 # Diccionario de palabras reservadas
@@ -26,10 +26,12 @@ reservadas = {
     'if'           : 'IF',
     'Map'          : 'MAPA',
     'putIfAbsent'  : 'PUT',
+    'ifAbsent'     : 'IFABSENT',
     'update'       : 'UPDATE',
     'print'        : 'PRINT',
     'substring'    : 'SUBSTRING',
-    'void'         : 'VOID'
+    'void'         : 'VOID',
+    'replaceRange' : 'REPLACE',
 }
 
 # Lista de tokens
@@ -38,6 +40,7 @@ tokens = [
     'INCREMENTO',
     'DECREMENTO',
     'EQUIVAL',
+    'NOEQUIVAL',
     'MAYEQ',
     'MINEQ',
     'DOUBLE',
@@ -88,6 +91,7 @@ t_VOID       = r'\bvoid\b'
 t_INCREMENTO = r"\+\+"
 t_DECREMENTO = r'\-\-'
 t_EQUIVAL    = r'=='
+t_NOEQUIVAL  = r'!='
 t_MAYEQ      = r'>='
 t_MINEQ      = r'<='
 t_PLUS       = r'\+'
@@ -114,8 +118,10 @@ t_OR         = r'\|\|'
 t_NOT        = r'\!'
 #t_COMIILLATS = r'\'\'\''
 #t_COMILLATD  = r'\"\"\"'
+t_IFABSENT   = r'\bifAbsent\b'
 t_PUT        = r'\bputIfAbsent\b'
 t_UPDATE     = r'\bupdate\b'
+t_REPLACE    = r'\breplaceRage\b'
 t_PTO        = r'\.'
 t_PRINT      = r'\bprint\b'
 t_CADENA     = r'(\'|\")[\w\s\?#$%&()=|°¬!]*(\'|\")'
@@ -148,7 +154,7 @@ def t_ID(t):
 
 # Manejo de errores
 def t_error(t):
-    errores.append("No es reconocido '%s'" % t.value[0])
+    erroresL.append("No es reconocido '%s'" % t.value[0])
     t.lexer.skip(1)
 
 # Construyendo al lexer
@@ -157,26 +163,112 @@ lexer = lex.lex()
 
 
 
+#Lee un string en data
 
+# data = '''for(int i = 0; i < 10; i++){
+#     var x = 20;
+#     var y = 30;
+#     if(x>y){
+#         var z = x + y;
+#     }
+# }'''
+# data='''
+# for(int i=0; i<10;i++){
+#  var 3!;
+# var 4!;
+# }
+# '''
+data='''
+int x=0;
+int x;
+double salaraio =10.425*horas;
+bool resig=true;
+void reg(var r){
+ if(!r){
+ var r=true;
+}
+}
+var s1='g';
+var $e="f";
+void main(){
+ var l= new List();
+l.add(33);
+var mapa = new Map();
+det['g']='g';
+}
+var p='Concateno1' + 'conca1';
+string[3];
+var string ="Hola mundo!";
+var newString = string.substring(0,3);
+if(2==2){
+var string ="Hola mundo!";
 
-data = '''for(int i = 0; i < 10; i++){
-    var x = 20;
-    var y = 30;
-    if(x>y){
-        var z = x + y;
-    }
-}'''
+}
+if(2!=2){
+var string ="Hola mundo!";
 
-# lexer.input(data)
-# while True:
-#     tok = lexer.token()
-#     if not tok:
-#         break  # No more input
-#     print(tok)
+}
+if(2>3){
+var string ="Hola mundo!";
 
+}
+if(2<3){
+var string ="Hola mundo!";
 
+}
+if(2>=3){
+var string ="Hola mundo!";
 
+}
+if(2<=4){
+var string ="Hola mundo!";
 
+}
+if(!h){
+var string ="Hola mundo!";
+
+}
+if(d&&g){
+var string ="Hola mundo!";
+
+}
+if(!e || !q){
+var string ="Hola mundo!";
+
+}
+print("1");
+for(int i =0;i<10;i++){
+var string ="Hola mundo!";
+
+}
+var num=0;
+while(num<10){
+print(num);
+num++;
+}
+
+while(num<10 || n==0 && p!=2){
+print(num);
+num++;
+}
+var lista=["h"];
+list.add('Mundo!');
+var lista = [2,3,4];
+lista.replaceRange(1,3,[99]);
+Map mapa = {1:"Hola", "2":3};
+mapa.putIfAbsent(3,() =>'! ');
+m.update("1j", (var val) => "Jim", ifAbsent: () => "Jane");
+'''
+lexer.input(data)
+while True:
+    tok = lexer.token()
+    if not tok:
+        break  # No more input
+    print(tok)
+
+print("Errores lexicos: " +str(erroresL))
+
+#Leee desde un archivo
 
 # archivo = 'codigoAlg.txt'
 # fichero= open(os.getcwd()+str('//') +archivo,'r+',encoding="utf8")

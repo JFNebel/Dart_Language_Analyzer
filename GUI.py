@@ -3,7 +3,8 @@ import sys
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from lexer import lexer, errores
+from lexer import lexer, erroresL
+from syntax import parser,erroresS
 
 
 
@@ -81,6 +82,8 @@ class MainWindow(QMainWindow):
 
         # Convertir a chequeables nuestras acctiones (lo que sea que eso signifique
         button_lexer.setCheckable(True)
+        button_syntax.setCheckable(True)
+
 
 
 
@@ -96,7 +99,7 @@ class MainWindow(QMainWindow):
     
     # El slot del lexer
     def onMyToolbarButtonLexico(self, s, label):
-        errores.clear()
+        erroresL.clear()
         self.output.setPlainText("")
         
         print("Se activa el lexer ")
@@ -109,25 +112,31 @@ class MainWindow(QMainWindow):
             if not tok:
                 break  # No more input
 
-        self.output.insertPlainText("Los errores detectados son: " + str (len(errores)) + "\n")
-        for i in errores:
+        self.output.insertPlainText("Errores léxicos detectados: " + str (len(erroresL)) + "\n")
+        for i in erroresL:
             self.output.insertPlainText(i + "\n")
-            
-
-
-
-
-
-
-
 
         # self.output.setPlainText(input)
 
-
-
+    #El slot del parser/sintactico
     def onMyToolbarButtonSyntax(self, s, label):
+        erroresS.clear()
+        self.output.setPlainText("")
         print("Se activa el slot del syntax ",s )
-        label.setText("Sintaxis finalizada")
+        dataT = self.input.toPlainText()
+        print("esto es data"+dataT)
+        dataT=dataT.split("\r\n")
+        for data in dataT:
+            # if len(data)==0:
+            #     self.output.insertPlainText("No ha ingresado texto" + "\n")
+            # else:
+            #     result = parser.parse(data)
+            #     print(result)
+            result = parser.parse(data)
+        self.output.insertPlainText("Errores sintácticos detectados: " + str (len(erroresS)) + "\n")
+        for i in erroresS:
+            self.output.insertPlainText(i)
+
         
     def onWindowTitleChange(self, s):
         print(s)
