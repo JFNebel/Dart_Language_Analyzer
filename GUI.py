@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
 
 
         # Esto determina el título de la ventana
-        self.setWindowTitle("Este es el título de la ventana")
+        self.setWindowTitle("Analizador Léxico y Sintáctico de Dart")
 
         # Aquí ponemos los Widgets que queramos
         label1 = QLabel("ToolBar") 
