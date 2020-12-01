@@ -21,18 +21,9 @@ class MainWindow(QMainWindow):
         # Esto determina las dimensiones de la ventana:
         self.resize(720, 600)
 
-        # Supuestamente aquí se cargan preferencias (lo que sea que eso signifique)
-        print("Aquí se cargan las configuraciones")
-
-
         # Aquí cargamos lo que denominamos "señales"
         # Conectamos señales (izq) a slots (derecha)
-        self.windowTitleChanged.connect(self.onWindowTitleChange)
-         
-        self.windowTitleChanged.connect(lambda x: self.my_custom_fn())
-        self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x))
-        self.windowTitleChanged.connect(lambda x: self.my_custom_fn(x, 25))
-
+        #self.windowTitleChanged.connect(self.onWindowTitleChange)
 
         # Esto determina el título de la ventana
         self.setWindowTitle("Analizador Léxico y Sintáctico de Dart")
@@ -102,7 +93,7 @@ class MainWindow(QMainWindow):
         erroresL.clear()
         self.output.setPlainText("")
         
-        print("Se activa el lexer ")
+        #print("Se activa el lexer ")
         data = self.input.toPlainText()
         #print(data)
 
@@ -122,9 +113,9 @@ class MainWindow(QMainWindow):
     def onMyToolbarButtonSyntax(self, s, label):
         erroresS.clear()
         self.output.setPlainText("")
-        print("Se activa el slot del syntax ",s )
+        #print("Se activa el slot del syntax ",s )
         dataT = self.input.toPlainText()
-        print("esto es data"+dataT)
+        #print("esto es data"+dataT)
         dataT=dataT.split("\r\n")
         for data in dataT:
             # if len(data)==0:
@@ -138,15 +129,6 @@ class MainWindow(QMainWindow):
             self.output.insertPlainText(i)
 
         
-    def onWindowTitleChange(self, s):
-        print(s)
-
-    def my_custom_fn(self, a = "Parametro por defecto", b = 5):
-        print(a, b)
-
-    def contextMenuEvent(self, event):
-        print("Supuestamente esto debe imprimirse cuando hay un click derecho", event)
-
 
 # Aquí ha terminado la clase que definimos
 

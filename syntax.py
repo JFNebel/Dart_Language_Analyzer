@@ -269,7 +269,7 @@ parser = yacc.yacc()
 #      }
 # '''
 
-data='''
+data=  '''
 double salaraio =10.425*horas;
 int x;
 int x=0;
@@ -340,11 +340,11 @@ mapa.putIfAbsent(3,() =>'! ');
 m.update("1j", (var val) => "Jim", ifAbsent: () => "Jane");
 var l=[];
     '''
-result = parser.parse(data)
-print("*************************************************************")
-print("La frase a analizar es: ", data)
-print(erroresS)
-print("Todavia hay "+str(len(erroresS)) + " errores en el sintactico")
+#result = parser.parse(data)
+#print("*************************************************************")
+#print("La frase a analizar es: ", data)
+#print(erroresS)
+#print("Todavia hay "+str(len(erroresS)) + " errores en el sintactico")
 
 
 

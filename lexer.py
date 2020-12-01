@@ -264,9 +264,9 @@ while True:
     tok = lexer.token()
     if not tok:
         break  # No more input
-    print(tok)
+   # print(tok)
 
-print("Errores lexicos: " +str(erroresL))
+# print("Errores lexicos: " +str(erroresL))
 
 #Leee desde un archivo
 
