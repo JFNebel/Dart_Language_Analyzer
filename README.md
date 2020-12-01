@@ -43,6 +43,11 @@ LexToken(RCURLYB,'}',1,28)
 1) El programa lexer.py necesita del archivo código.txt en su mismo directorio.
 2) El archivo código.txt debe tener una frase por línea
 
+### Backlog:<br/>
+1) Implementar las retroalimentaciones dades del Avance 3.
+2) Actualizar readme
+3) Crear módulos para mejorar la organización de archivos del proyecto.
+
 ## Autores
 - Juan Nebel Dunn
 - Allison Brito
