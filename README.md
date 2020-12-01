@@ -1,4 +1,4 @@
-# Dart_Lexical_Analyzer
+# Dart_Lexical_Analyzer (README SERÁ ACTUALIZADO PARA ACOMODARSE A LA NUEVA FUNCIONALIDAD PARA EL AVANCE FINAL)
 Este proyecto escrito en Python simula lo que un analizador léxico básico del Dart haría al momento de analizar cadenas de caracteres. Esto lo logra a travez del uso de la librería PLY. Las frases a analizar se encuentran en el archivo aparte código.txt, estas serán leídas por lexer.py y por consola se mostraran los tokens que el lexer ha reconocido como parte del lenguaje a partir de los lexemas con los que fue alimentado. 
 
 ## Dependencias 
