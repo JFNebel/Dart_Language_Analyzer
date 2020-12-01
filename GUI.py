@@ -71,7 +71,7 @@ class MainWindow(QMainWindow):
 
         # Text Area Output
         self.output = QPlainTextEdit(self)
-        self.output.insertPlainText("Aquí sale tu resultado rey!\n")
+        self.output.insertPlainText("Aquí verás tu resultado!\n")
         self.output.move(360,95)
         self.output.resize(360,480)
         self.output.setReadOnly(True)
