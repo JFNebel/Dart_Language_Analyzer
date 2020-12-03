@@ -12,12 +12,12 @@ erroresL = []
 
 # Diccionario de palabras reservadas
 reservadas = {
+    'true'         : 'TRUE',
     'for'          : 'FOR',
     'var'          : 'VAR',
     'int'          : 'INT',
-    'double'       : 'VARDOUBLE',
     'bool'         : 'VARBOOL',
-    'true'         : 'TRUE',
+    'else'         : 'ELSE',
     'false'        : 'FALSE',
     'while'        : 'WHILE',
     'new'          : 'NEW',
@@ -43,7 +43,6 @@ tokens = [
     'NOEQUIVAL',
     'MAYEQ',
     'MINEQ',
-    'DOUBLE',
     'ID',
     'PLUS',
     'PTO',
@@ -63,25 +62,22 @@ tokens = [
     'DOSPTO',
     'RCURLYB',
     'LCURLYB',
-    # 'COMILLAD',
-    # 'COMILLAS',
-#   'COMILLATD',
-#   'COMIILLATS',
     'COMA',
     'AND',
     'OR',
-    'NOT'
+    'NOT',
 ] + list(reservadas.values())
     
 #Expresiones regulares:
 t_VAR        = r'\bvar\b'
+t_TRUE       = r'\btrue\b'
+t_FALSE      = r'\bfalse\b'
 t_IF         = r'\bif\b'
+t_ELSE       = r'\belse\b'
 t_FOR        = r'\bfor\b'
 t_INT        = r'\bint\b'
 t_WHILE      = r'\bwhile\b'
-t_TRUE       = r'\btrue\b'
-t_FALSE      = r'\bfalse\b'
-t_VARDOUBLE  = r'\bdouble\b'
+#t_VARDOUBLE  = r'\bdouble\b'
 t_VARBOOL    = r'\bbool\b'
 t_LISTA      = r'\bList\b'
 t_MAPA       = r'\bMap\b'
@@ -126,19 +122,24 @@ t_PTO        = r'\.'
 t_PRINT      = r'\bprint\b'
 t_CADENA     = r'(\'|\")[\w\s\?#$%&()=|°¬!]*(\'|\")'
 
-t_ignore     = r' \t'  # ignore espacio o tab, usar caracteres \t saca un warning
+t_ignore     = r' '  # ignore espacio o tab, usar caracteres \t saca un warning
 
-#Numeros decimales
-def t_DOUBLE(t):
-    r'[0-9]+\.[0-9]+'
-    t.type = reservadas.get(t.value, 'DOUBLE')
-    return t
+# #Numeros decimales
+# def t_DOUBLE(t):
+#     r'([1-9][0-9]*\.[0-9]+|[0]\.[0-9]+)'
+#     t.type = reservadas.get(t.value, 'DOUBLE')
+#     return t
 
 #Numeros enteros
 def t_NUMBER(t):
     r'\d+'
     t.type = reservadas.get(int(t.value), 'NUMBER')
     return t
+
+
+def t_SPACETAB(t):
+    r'[ \t]+'
+    print("Space(s) and/or tab(s)")
 
 #Salto de línea
 def t_newline(t):
@@ -178,93 +179,113 @@ lexer = lex.lex()
 # var 4!;
 # }
 # '''
-data='''
-int x=0;
-int x;
-double salaraio =10.425*horas;
-bool resig=true;
-void reg(var r){
- if(!r){
- var r=true;
-}
-}
-var s1='g';
-var $e="f";
-void main(){
- var l= new List();
-l.add(33);
-var mapa = new Map();
-det['g']='g';
-}
-var p='Concateno1' + 'conca1';
-string[3];
-var string ="Hola mundo!";
-var newString = string.substring(0,3);
-if(2==2){
-var string ="Hola mundo!";
+# data='''
+# int x=0;
+# int x;
+# double salaraio =10.425*horas;
+# bool resig=true;
+# void reg(var r){
+#  if(!r){
+#  var r=true;
+# }
+# }
+# var s1='g';
+# var $e="f";
+# void main(){
+#  var l= new List();
+# l.add(33);
+# var mapa = new Map();
+# det['g']='g';
+# }
+# var p='Concateno1' + 'conca1';
+# string[3];
+# var string ="Hola mundo!";
+# var newString = string.substring(0,3);
+# if(2==2){
+# var string ="Hola mundo!";
 
-}
-if(2!=2){
-var string ="Hola mundo!";
+# }
+# if(2!=2){
+# var string ="Hola mundo!";
 
-}
-if(2>3){
-var string ="Hola mundo!";
+# }
+# if(2>3){
+# var string ="Hola mundo!";
 
-}
-if(2<3){
-var string ="Hola mundo!";
+# }
+# if(2<3){
+# var string ="Hola mundo!";
 
-}
-if(2>=3){
-var string ="Hola mundo!";
+# }
+# if(2>=3){
+# var string ="Hola mundo!";
 
-}
-if(2<=4){
-var string ="Hola mundo!";
+# }
+# if(2<=4){
+# var string ="Hola mundo!";
 
-}
-if(!h){
-var string ="Hola mundo!";
+# }
+# if(!h){
+# var string ="Hola mundo!";
 
-}
-if(d&&g){
-var string ="Hola mundo!";
+# }
+# if(d&&g){
+# var string ="Hola mundo!";
 
-}
-if(!e || !q){
-var string ="Hola mundo!";
+# }
+# if(!e || !q){
+# var string ="Hola mundo!";
 
-}
-print("1");
-for(int i =0;i<10;i++){
-var string ="Hola mundo!";
+# }
+# print("1");
+# for(int i =0;i<10;i++){
+# var string ="Hola mundo!";
 
-}
-var num=0;
-while(num<10){
-print(num);
-num++;
-}
+# }
+# var num=0;
+# while(num<10){
+# print(num);
+# num++;
+# }
 
-while(num<10 || n==0 && p!=2){
-print(num);
-num++;
-}
-var lista=["h"];
-list.add('Mundo!');
-var lista = [2,3,4];
-lista.replaceRange(1,3,[99]);
-Map mapa = {1:"Hola", "2":3};
-mapa.putIfAbsent(3,() =>'! ');
-m.update("1j", (var val) => "Jim", ifAbsent: () => "Jane");
-'''
-lexer.input(data)
-while True:
-    tok = lexer.token()
-    if not tok:
-        break  # No more input
-   # print(tok)
+# while(num<10 || n==0 && p!=2){
+# print(num);
+# num++;
+# }
+# var lista=["h"];
+# list.add('Mundo!');
+# var lista = [2,3,4];
+# lista.replaceRange(1,3,[99]);
+# Map mapa = {1:"Hola", "2":3};
+# mapa.putIfAbsent(3,() =>'! ');
+# m.update("1j", (var val) => "Jim", ifAbsent: () => "Jane");
+# void p(){
+# p++;
+# }
+# void p(var d){
+# p++;
+# }
+# void p(var d, var d){
+# p++;
+# }
+# while(true){
+# p++;}
+# while(false){
+# p++;}
+# void imprimit(){
+# s++;
+# }
+# f(f);
+# l[0]=2;
+# l["g"]="d";
+# }
+# '''
+# lexer.input(data)
+# while True:
+#     tok = lexer.token()
+#     if not tok:
+#         break  # No more input
+#     print(tok)
 
 # print("Errores lexicos: " +str(erroresL))
 

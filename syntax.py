@@ -14,6 +14,13 @@ erroresS=[]
 
 # *********************** Expresión global (Allison Brito y Juan Nebel) *****************************
 
+def p_expresionG(p):
+    '''expresionG : funcion
+                  | funcion expresionG
+                  | expresion
+    '''
+
+
 def p_expresion(p):
     '''expresion : lista
     | mapa
@@ -26,7 +33,7 @@ def p_expresion(p):
     | incremento
     | decremento
     | print
-    | funcion
+    | llamarFuncion
     | concatenar
     | expresion expresion
     '''
@@ -36,11 +43,14 @@ def p_expresion(p):
 def p_variable(p):
     '''variable : VAR ID EQUALS expresionVar PUNTCOM
                 | VAR ID PUNTCOM
-                | VAR ID EQUALS expresionBool PUNTCOM'''
+                | VAR ID EQUALS expresionBool PUNTCOM
+                | INT ID EQUALS NUMBER PUNTCOM
+                | INT ID PUNTCOM
+                | VARBOOL ID EQUALS booleano PUNTCOM
+                '''
 
 def p_valorVar(p):
     '''valorVar : NUMBER
-                | DOUBLE
                 | CADENA'''
 
 
@@ -79,7 +89,9 @@ def p_expresionWhile(p):
 # *********************** ESTRUCTURA IF (Juan Nebel) *****************************
 
 def p_expresionIf(p):
-    'expresionIf : IF LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB'
+    '''expresionIf : IF LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB
+                    | IF LPAREN expresionBool RPAREN LCURLYB expresion RCURLYB ELSE LCURLYB expresion RCURLYB'''
+
 
 # *********************** REGLAS BOOL (Allison Brito y Juan Nebel) *****************************
 
@@ -94,8 +106,8 @@ def p_expresionBool(p):
                      | expresionBool EQUIVAL expresionBool''' #No estoy seguro porque no puedo concatenar
 
 def p_booleano(p):
-    '''booleano : TRUE
-                | FALSE'''
+    '''booleano : FALSE
+                | TRUE'''
 
 def p_comparador(p):
     '''comparador : MAYORQUE 
@@ -118,13 +130,10 @@ def p_lista(p):
     '''
 #Inicializacion de una lista
 def p_expLista(p):
-    '''expLista : VAR ID EQUALS NEW LISTA LPAREN inicializaLista RPAREN PUNTCOM
+    '''expLista : VAR ID EQUALS NEW LISTA LPAREN NUMBER RPAREN PUNTCOM
+                | VAR ID EQUALS NEW LISTA LPAREN RPAREN PUNTCOM
                 | VAR ID EQUALS LCORCHETE elementosLista RCORCHETE PUNTCOM
-    '''
-#Valor que se le asigna al momento de declarar el # de elementos de un mapa
-def p_inicializaLista(p):
-    '''inicializaLista  : NUMBER
-                        | 
+                | VAR ID EQUALS LCORCHETE RCORCHETE PUNTCOM
     '''
 
 #Agregar elementos a una lista
@@ -147,7 +156,6 @@ def p_elementosLista(p):
                       | NUMBER
                       | CADENA COMA elementosLista
                       | NUMBER COMA elementosLista
-                      | 
     '''
 
 #Reemplazar elementos de una lista
@@ -225,17 +233,29 @@ def p_printVal(p):
 # *********************** FUNCION (Allison Brito) *****************************
 #Construir una funcion
 def p_funcion(p):
-    '''funcion : VOID ID LPAREN parametroFuncion RPAREN final_key
+    '''funcion : VOID ID LPAREN parametroFuncion RPAREN LCURLYB expresion RCURLYB
+               | VOID ID LPAREN RPAREN LCURLYB expresion RCURLYB
     '''
 
 def p_parametroFuncion(p):
-    '''parametroFuncion : VAR ID
-                        | 
+    '''parametroFuncion : VAR ID 
+                        | VAR ID COMA parametroFuncion
     '''
 
-def p_final_key(p):
-    '''final_key : LCURLYB expresion RCURLYB
+#Llamar funcion dentro de una funcion/main
+def p_llamarFuncion(p):
+    '''llamarFuncion : ID LPAREN RPAREN PUNTCOM
+                     | ID LPAREN parametroLlamarFuncion RPAREN PUNTCOM
     '''
+
+def p_parametroLlamarFuncion(p):
+    
+    '''parametroLlamarFuncion : num_cadena
+                               | ID
+                               | num_cadena COMA parametroLlamarFuncion
+                               | ID COMA parametroLlamarFuncion
+    '''
+    print(p)
 
 def p_concatenar(p):
     '''concatenar : VAR ID EQUALS concatenarRecursivo PUNTCOM
@@ -248,8 +268,8 @@ def p_concatenarRecursivo(p):
     '''
 
 def p_error(p):
-
-    erroresS.append("Error sintactico al definir: " + str(p)+"\n")
+    print(p)
+    erroresS.append("Error sintactico antes de definir: " + str(p)+"\n")
     
 
 
@@ -269,78 +289,100 @@ parser = yacc.yacc()
 #      }
 # '''
 
-data=  '''
-double salaraio =10.425*horas;
-int x;
-int x=0;
-bool resig=true;
-void reg(var r){
- if(!r){
- var r=true;
-}
-}
-var s1='g';
-var $e="f";
-void main(){
- var l= new List();
-l.add(33);
-var mapa = new Map();
-det['g']='g';
-}
-var p='Concateno1' + 'conca1';
-var s=string[3];
-var string ="Hola mundo!";
-var newString = string.substring(0,3);
-if(2==2){
-    var string ="Hola mundo!";
-}
-if(2!=2){
-    var string ="Hola mundo!";
-}
-if(2>3){
-    var string ="Hola mundo!";
-}
-if(2<3){
-var string ="Hola mundo!";
-}
-if(2>=3){
-var string ="Hola mundo!";
-}
-if(2<=4){
-var string ="Hola mundo!";
-}
-if(!h){
-var string ="Hola mundo!";
-}
-if(d&&g){
-var string ="Hola mundo!";
-}
-if(!e || !q){
-var string ="Hola mundo!";
-}
-print("1");
-for(int i =0;i<10;i++){
-    var string ="Hola mundo!";
-}
-var num=0;
-while(num<10){
-print(num);
-num++;
-}
-while(num<10 || n==0 && p!=2){
-print(num);
-num++;
-}
-var lista=["h"];
-list.add('Mundo!');
-var lista = [2,3,4];
-lista.replaceRange(1,3,[99]);
-Map mapa = {1:"Hola", "2":3};
-mapa.putIfAbsent(3,() =>'! ');
-m.update("1j", (var val) => "Jim", ifAbsent: () => "Jane");
-var l=[];
-    '''
-#result = parser.parse(data)
+# data=  '''
+# void reg(var r, var r){
+#  if(!r){
+#  var r=true;
+# }
+# var s1='g';
+# var $e="f";
+# void main(){
+#  var l= new List();
+# l.add(33);
+# var mapa = new Map();
+# det['g']='g';
+# }
+# var p='Concateno1' + 'conca1';
+# var s=string[3];
+# var string ="Hola mundo!";
+# var newString = string.substring(0,3);
+# if(2==2){
+#     var string ="Hola mundo!";
+# }
+# if(2!=2){
+#     var string ="Hola mundo!";
+# }
+# if(2>3){
+#     var string ="Hola mundo!";
+# }
+# if(2<3){
+# var string ="Hola mundo!";
+# }
+# if(2>=3){
+# var string ="Hola mundo!";
+# }
+# if(2<=4){
+# var string ="Hola mundo!";
+# }
+# if(!h){
+# var string ="Hola mundo!";
+# }
+# if(d&&g){
+# var string ="Hola mundo!";
+# }
+# if(!e || !q){
+# var string ="Hola mundo!";
+# }
+# print("1");
+# for(int i =0;i<10;i++){
+#     var string ="Hola mundo!";
+# }
+# var num=0;
+# while(num<10){
+# print(num);
+# num++;
+# }
+# while(num<10 || n==0 && p!=2){
+# print(num);
+# num++;
+# }
+# var lista=["h"];
+# list.add('Mundo!');
+# var lista = [2,3,4];
+# lista.replaceRange(1,3,[99]);
+# Map mapa = {1:"Hola", "2":3};
+# mapa.putIfAbsent(3,() =>'! ');
+# m.update("1j", (var val) => "Jim", ifAbsent: () => "Jane");
+# var l=[];
+# while(false){
+#     print("g");
+# }
+#  while(false && n>0 || $i>10)
+# {	
+# print("Hola");
+# }
+# void p(){
+# p++;
+# }
+# void p(var d){
+# p++;
+# }
+# void p(var d, var d){
+# p++;
+# }
+# void p(){
+# p++;
+# }
+# void p(var d){
+# p++;
+# }
+# void p(p){
+#     imprimir();
+
+# p++;
+# }
+# '''
+# result = parser.parse(data)
 #print("*************************************************************")
 #print("La frase a analizar es: ", data)
 #print(erroresS)
